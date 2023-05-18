@@ -38,12 +38,12 @@ const UserMenu = () => {
                 <div className='flex flex-col cursor-p@ointer'>
                     <>
                         <MenuItem
-                            onClick={() => {}}
                             label="Login"
+                            onClick={() => {}}
                         />
                         <MenuItem
-                            onClick={registerModal.onOpen}
                             label="Sign up"
+                            onClick={registerModal.onOpen}
                         />
                     </>
                 </div>

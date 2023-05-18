@@ -14,6 +14,8 @@ import useRegisterModal from '@/app/hooks/useRegisterModal';
 import Modal from '@/app/components/modals/Modal';
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/inputs/Input';
+import { toast } from 'react-hot-toast';
+import Button from '../Button';
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal()
@@ -33,7 +35,7 @@ const RegisterModal = () => {
     }
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = useCallback(async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
     axios.post('/api/auth/register', data)
@@ -41,12 +43,12 @@ const RegisterModal = () => {
         registerModal.onClose();
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error.response.data.message);
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [registerModal]);
+  };
 
   const bodyContet = (
     <div className="flex flex-col gap-4">
@@ -62,6 +64,35 @@ const RegisterModal = () => {
         errors={errors}
         required
       />
+      <Input 
+        id="name"
+        label="Name"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input 
+        id="password"
+        label="password"
+        type="password"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+    </div>
+  )
+
+  const footerContent = (
+    <div className="flex flex-col gap-4 mt-3">
+      <hr />
+      <Button
+        outline
+        label="Continue with Google"
+        icon={FcGoogle}
+        onClick={() => {}}
+      ></Button>
     </div>
   )
 
@@ -73,6 +104,8 @@ const RegisterModal = () => {
       actionLabel='Continue'
       onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
+      body={bodyContet}
+      footer={footerContent}
     />
   )
 }

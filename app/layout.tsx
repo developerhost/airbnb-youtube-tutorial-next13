@@ -8,6 +8,7 @@ import ClientOnly from './components/ClientOnly'
 import Modal from './components/modals/Modal'
 import RegisterModal from './components/modals/RegisterModal'
 import useRegisterModal from '@/app/hooks/useRegisterModal';
+import ToasterProvider from './providers/ToasterProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,7 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <ClientOnly>
-          <Modal actionLabel='Submit' title="Hello World" isOpen onClose={() => {}} onSubmit={() => {}} />
+          <ToasterProvider />
           <RegisterModal />
           <Navbar />
         </ClientOnly>

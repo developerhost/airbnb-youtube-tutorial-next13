@@ -69,6 +69,10 @@ const Input: React.FC<InputProps> = ({
                 origin-[0]
                 ${formatPrice ? 'left-9' : 'left-4'}
                 peer-placeholder-shown:scale-100
+                peer-placeholder-shown:translate-y-0
+                peer-fucus:scale-75
+                peer-fucus:translate-y-4
+                ${errors[id] ? 'text-rose-500' : 'text-neutral-500'}
             `}
         >
             {label}
