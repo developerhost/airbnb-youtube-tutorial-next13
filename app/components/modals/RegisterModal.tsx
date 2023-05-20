@@ -38,12 +38,13 @@ const RegisterModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    axios.post('/api/auth/register', data)
+    axios.post('/api/register', data)
       .then(() => {
+        toast.success('Registered!');
         registerModal.onClose();
       })
       .catch((error) => {
-        toast.error(error.response.data.message);
+        toast.error(error);
       })
       .finally(() => {
         setIsLoading(false);
