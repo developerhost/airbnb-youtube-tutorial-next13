@@ -7,6 +7,7 @@ import Navbar from './components/navbar/Nabvar'
 import ClientOnly from './components/ClientOnly'
 import Modal from './components/modals/Modal'
 import RegisterModal from './components/modals/RegisterModal'
+import LoginModal from './components/modals/loginModal'
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import ToasterProvider from './providers/ToasterProvider'
 
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className={font.className}>
         <ClientOnly>
           <ToasterProvider />
+          <LoginModal />
           <RegisterModal />
           <Navbar />
         </ClientOnly>
