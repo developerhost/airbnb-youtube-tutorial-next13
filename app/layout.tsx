@@ -8,6 +8,7 @@ import ClientOnly from './components/ClientOnly'
 import Modal from './components/modals/Modal'
 import RegisterModal from './components/modals/RegisterModal'
 import LoginModal from './components/modals/loginModal'
+import RentModal from './components/modals/RentModal'
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import ToasterProvider from './providers/ToasterProvider'
 import getCurrentUser from './actions/getCurrentUser'
@@ -36,6 +37,7 @@ export default async function RootLayout({
       <body suppressHydrationWarning={true}  className={font.className}>
         <ClientOnly>
           <ToasterProvider />
+          <RentModal />
           <LoginModal />
           <RegisterModal />
           <Navbar currentUser={currentUser} />
