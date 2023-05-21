@@ -20,19 +20,23 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
   const handleClick = useCallback(() => {
     let currentQuery = {};
 
+    // paramsがある場合は、現在のクエリを取得する
     if(params) {
       currentQuery = qs.parse(params.toString());
     }
 
+    // クエリを更新する
     const updatedQuery: any = {
       ...currentQuery,
       category: label
     }
 
+    // クエリを削除する
     if(params?.get('category') === label) {
       delete updatedQuery.category;
     }
 
+    // クエリを追加する
     const url = qs.stringifyUrl({
       url: '/',
       query: updatedQuery
@@ -42,6 +46,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
   }, [label, params, router]);
 
   return (
+    // ここで、クリックされたら、クエリを更新する
     <div
     onClick={handleClick}
       className={`
