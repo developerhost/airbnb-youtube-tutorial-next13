@@ -20,6 +20,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
+    "fs": "^0.0.1-security",
     "leaflet": "^1.9.4",
     "next": "13.4.1",
     "next-auth": "^4.22.1",
