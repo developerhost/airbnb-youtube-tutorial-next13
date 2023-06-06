@@ -29,3 +29,12 @@ body,
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+.rdrMonth {
+  width: 100% !important;
+}
+
+.rdrCalendarWrapper {
+  font-size: 16px !important;
+  width: 100% !important;
+}
