@@ -1,3 +1,14 @@
+/*
+このコードは、Reactアプリケーションで予約機能を提供するために使用される
+
+- データを取得し、変換するためのPrismaにアクセスする
+- 特定のカテゴリーを選択するためのナビゲーションバーの作成
+- ログインモーダルの使用 (未ログインの場合に表示される)
+- レンダリングされるリスト項目の詳細情報を管理する
+- 指定された日付範囲に基づいて価格を計算する
+*/
+
+// 'use client' は 'use strict' の代わりに使われます。厳密なモードで実行されることを保証します。
 'use client'
 
 import { Reservation } from "@prisma/client";
@@ -16,6 +27,7 @@ import { toast } from "react-hot-toast";
 import ListingReservation from "@/app/components/listings/ListingReservation";
 import { Range } from "react-date-range";
 
+// 初期の日付範囲を設定
 const initialDateRange = {
   startDate: new Date(),
   endDate: new Date(),
@@ -38,6 +50,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
   const loginModal = useLoginModal();
   const router = useRouter();
 
+  // 予約済みの日付を無効にするための配列を作成
   const disabledDates = useMemo(() => {
     let dates: Date[] = [];
 
@@ -57,6 +70,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
   const [totalPrice, setTotalPrice] = useState(listing.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
+  // 予約を作成する関数
   const onCreateReservation = useCallback(() => {
     if (!currentUser) {
       loginModal.onOpen();
@@ -90,6 +104,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
     loginModal,
   ]);
 
+  // 日付範囲が変更された場合に価格を再計算する
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {
       const dayCount = differenceInCalendarDays(
@@ -105,10 +120,12 @@ const ListingClient: React.FC<ListingClientProps> = ({
     }
   }, [dateRange, listing.price]);
 
+  // リスト項目のカテゴリーを取得する
   const category = useMemo(() => {
     return categories.find((item) =>
       item.label === listing.category);
   }, [])
+
   return (
     <Container>
       <div className="max-w-screen-lg mx-auto">

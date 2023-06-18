@@ -1,29 +1,47 @@
-'use client';
+/*
+Airbnbのサイトで新規登録するためのモーダルを定義しています。
+ユーザーがフォームに必要事項を入力し、送信すると、axiosを使ってAPIエンドポイントにデータを送信します。
+その後、成功した場合はログインモーダルを開き、失敗した場合はエラートーストを表示します。
+また、GoogleアカウントやGithubアカウントを使用して登録することもできます。
+*/
 
-import axios from 'axios';
-import { AiFillGithub } from 'react-icons/ai';
-import { FcGoogle } from 'react-icons/fc';
-import { useCallback, useState } from 'react';
+'use client'
+
+// ライブラリのインポート
+import axios from 'axios'; // HTTPクライアント
+import { AiFillGithub } from 'react-icons/ai'; // Githubアイコン
+import { FcGoogle } from 'react-icons/fc'; // Googleアイコン
+import { useCallback, useState } from 'react'; // React Hooks
 import {
     FieldValues,
     SubmitHandler,
     useForm,
-} from 'react-hook-form';
+} from 'react-hook-form'; // フォームバリデーションライブラリ
 
+// カスタムフックのインポート
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
+
+// コンポーネントのインポート
 import Modal from '@/app/components/modals/Modal';
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/inputs/Input';
-import { toast } from 'react-hot-toast';
 import Button from '../Button';
+
+// その他のライブラリのインポート
+import { toast } from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
 
+// RegisterModalコンポーネントの定義
 const RegisterModal = () => {
+  // カスタムフックの呼び出し
   const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
+
+  // ステート変数の定義
   const [isLoading, setIsLoading] = useState(false);
 
+  // フォームバリデーションの設定
   const {
     register,
     handleSubmit,
@@ -38,13 +56,15 @@ const RegisterModal = () => {
     }
   });
 
+  // フォームの送信処理
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
     axios.post('/api/register', data)
       .then(() => {
-        toast.success('Registered!');
+        toast.success('Registration successful');
         registerModal.onClose();
+        loginModal.onOpen();
       })
       .catch((error) => {
         toast.error(error);
@@ -54,11 +74,13 @@ const RegisterModal = () => {
       });
   };
 
+  // ログインフォームとの切り替え処理
   const toggle = useCallback(() => {
     registerModal.onClose();
     loginModal.onOpen();
   }, [registerModal, registerModal])
 
+  // モーダルの中身を定義
   const bodyContet = (
     <div className="flex flex-col gap-4">
       <Heading 
@@ -93,6 +115,7 @@ const RegisterModal = () => {
     </div>
   )
 
+  // モーダルのフッターを定義
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
       <hr />
@@ -134,6 +157,7 @@ const RegisterModal = () => {
     </div>
   )
 
+  // モーダルを返す
   return (
     <Modal
       disabled={isLoading}
