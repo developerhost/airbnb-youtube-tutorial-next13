@@ -1,5 +1,6 @@
-"use client";
+// このコードは、宿泊施設のカード表示を行うListingCardコンポーネントです。
 
+// 必要なライブラリやコンポーネントをインポート
 import { Listing, Reservation } from "@prisma/client";
 import { SafeListing, SafeReservation, SafeUser } from "../../types";
 import { useRouter } from "next/navigation";
@@ -10,6 +11,7 @@ import Image from "next/image";
 import HeartButton from "../HeartButton";
 import Button from "../Button";
 
+// Propsの型定義
 interface ListingCardProps {
     data: SafeListing;
     reservation?: SafeReservation;
@@ -20,6 +22,7 @@ interface ListingCardProps {
     currentUser?: SafeUser | null;
 }
 
+// コンポーネントの定義
 const ListingCard: React.FC<ListingCardProps> = ({
     data,
     reservation,
@@ -29,11 +32,15 @@ const ListingCard: React.FC<ListingCardProps> = ({
     actionId = "",
     currentUser,
 }) => {
+    // nextjsのuseRouterをインスタンス化
     const router = useRouter();
+    // Hookからユーティリティ関数getByValueを取得
     const { getByValue } = useCountries();
 
+    // 都市名と国名を取得
     const location = getByValue(data.locationValue);
 
+    // キャンセルボタンの処理
     const handleCancel = useCallback(
         (e: React.MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
@@ -45,24 +52,26 @@ const ListingCard: React.FC<ListingCardProps> = ({
             onAction?.(actionId);
         },[onAction, disabled, actionId]);
 
-        const price = useMemo(() => {
-            if (reservation) {
-                return reservation.totalPrice;
-            }
+    // 金額を計算
+    const price = useMemo(() => {
+        if (reservation) {
+            return reservation.totalPrice;
+        }
 
-            return data.price;
-        }, [reservation, data.price]);
+        return data.price;
+    }, [reservation, data.price]);
 
-        const reservationData = useMemo(() => {
-            if (!reservation) {
-                return null;
-            }
+    // 予約されている場合は、期間を計算
+    const reservationData = useMemo(() => {
+        if (!reservation) {
+            return null;
+        }
 
-            const start = new Date(reservation.startDate);
-            const end = new Date(reservation.endDate);
+        const start = new Date(reservation.startDate);
+        const end = new Date(reservation.endDate);
 
-            return `${format(start, "PP")} - ${format(end, "PP")}`;
-        }, [reservation]);
+        return `${format(start, "PP")} - ${format(end, "PP")}`;
+    }, [reservation]);
 
   return (
     <div
@@ -127,4 +136,5 @@ const ListingCard: React.FC<ListingCardProps> = ({
   )
 }
 
+// コンポーネントのエクスポート
 export default ListingCard;
