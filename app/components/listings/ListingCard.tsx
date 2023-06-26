@@ -1,4 +1,5 @@
 // このコードは、宿泊施設のカード表示を行うListingCardコンポーネントです。
+'use client'
 
 // 必要なライブラリやコンポーネントをインポート
 import { Listing, Reservation } from "@prisma/client";

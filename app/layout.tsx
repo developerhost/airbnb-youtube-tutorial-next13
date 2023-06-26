@@ -12,6 +12,7 @@ import RentModal from './components/modals/RentModal'
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import ToasterProvider from './providers/ToasterProvider'
 import getCurrentUser from './actions/getCurrentUser'
+import SearchModal from './components/modals/SearchModal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
       <body suppressHydrationWarning={true}  className={font.className}>
         <ClientOnly>
           <ToasterProvider />
+          <SearchModal />
           <RentModal />
           <LoginModal />
           <RegisterModal />
